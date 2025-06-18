@@ -1,161 +1,101 @@
-
-
+<!DOCTYPE html>
 <html lang="vi">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Tính Giờ Làm Việc</title>
+  <title>Tính nhanh</title>
+  <link href="https://fonts.googleapis.com/css2?family=Roboto&display=swap" rel="stylesheet">
   <style>
-    * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
-      margin: 0;
-      padding: 20px;
-      background-color: #f4f4f4;
+      font-family: 'Roboto', sans-serif;
+      background-color: #f0f4f8;
       color: #333;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      padding: 40px 20px;
     }
+
     h1 {
-      text-align: center;
-      margin-bottom: 30px;
+      color: #007acc;
+      margin-bottom: 20px;
     }
+
     .container {
-      max-width: 500px;
-      margin: 0 auto;
-      background: white;
-      padding: 20px;
+      background-color: #ffffff;
+      padding: 30px;
       border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+      max-width: 500px;
+      width: 100%;
     }
+
     label {
       display: block;
-      margin-bottom: 10px;
+      margin-bottom: 8px;
+      font-weight: bold;
     }
-    input[type="time"],
-    input[type="number"] {
+
+    input {
       width: 100%;
       padding: 10px;
-      margin-top: 5px;
+      margin-bottom: 20px;
       border: 1px solid #ccc;
       border-radius: 5px;
+      font-size: 16px;
     }
+
     button {
-      width: 100%;
-      padding: 10px;
-      margin-top: 20px;
-      background-color: #007bff;
+      background-color: #007acc;
       color: white;
+      padding: 10px 20px;
       border: none;
       border-radius: 5px;
       font-size: 16px;
       cursor: pointer;
+      transition: background-color 0.3s ease;
     }
+
     button:hover {
-      background-color: #0056b3;
+      background-color: #005f99;
     }
-    table {
-      width: 100%;
-      border-collapse: collapse;
-      margin-top: 20px;
-    }
-    th, td {
-      border: 1px solid #ccc;
-      padding: 10px;
-      text-align: center;
-    }
+
     .result {
       margin-top: 20px;
+      font-size: 18px;
       font-weight: bold;
-      text-align: center;
+      color: #28a745;
     }
   </style>
 </head>
 <body>
+  <h1>Tính phần trăm nhanh</h1>
   <div class="container">
-    <h1>Tính Giờ Làm Việc</h1>
-
-    <label>Giờ vào:
-      <input type="time" id="start">
-    </label>
-
-    <label>Giờ ra:
-      <input type="time" id="end">
-    </label>
-
-    <label>Sản lượng:
-      <input type="number" id="output" value="0" min="0">
-    </label>
-
-    <button onclick="calculateWorkTime()">Tính</button>
-
-    <table>
-      <thead>
-        <tr>
-          <th>Sản lượng</th>
-          <th>Kết quả (giờ * sản lượng * 0.96)</th>
-        </tr>
-      </thead>
-      <tbody>
-        <tr>
-          <td id="outputDisplay">0</td>
-          <td id="finalResult">--</td>
-        </tr>
-      </tbody>
-    </table>
-
-    <div class="result" id="result"></div>
+    <label for="soGoc">Nhập số gốc:</label>
+    <input type="number" id="soGoc" placeholder="Ví dụ: 16329">
+    
+    <label for="phanTram">Nhập % cần tính:</label>
+    <input type="number" id="phanTram" placeholder="Ví dụ: 96">
+    
+    <button onclick="tinh()">Tính ngay</button>
+    
+    <div class="result" id="ketQua"></div>
   </div>
 
   <script>
-    function parseTimeToMinutes(timeStr) {
-      const [hours, minutes] = timeStr.split(":" ).map(Number);
-      return hours * 60 + minutes;
-    }
+    function tinh() {
+      const soGoc = parseFloat(document.getElementById("soGoc").value);
+      const phanTram = parseFloat(document.getElementById("phanTram").value);
 
-    function calculateBreakTime(startMinutes, endMinutes) {
-      const breaks = [
-        { start: 10 * 60, end: 10 * 60 + 10 },
-        { start: 12 * 60, end: 12 * 60 + 45 },
-        { start: 15 * 60, end: 15 * 60 + 10 },
-        { start: 16 * 60 + 30, end: 17 * 60 },
-      ];
-
-      let totalBreak = 0;
-      for (const b of breaks) {
-        if (startMinutes < b.end && endMinutes > b.start) {
-          const overlapStart = Math.max(startMinutes, b.start);
-          const overlapEnd = Math.min(endMinutes, b.end);
-          totalBreak += overlapEnd - overlapStart;
-        }
-      }
-      return totalBreak;
-    }
-
-    function calculateWorkTime() {
-      const start = document.getElementById("start").value;
-      const end = document.getElementById("end").value;
-      const output = parseFloat(document.getElementById("output").value);
-
-      if (!start || !end || isNaN(output)) {
-        document.getElementById("result").textContent = "Vui lòng nhập giờ vào, giờ ra và sản lượng.";
-        document.getElementById("finalResult").textContent = "--";
-        document.getElementById("outputDisplay").textContent = output || 0;
+      if (isNaN(soGoc) || isNaN(phanTram)) {
+        document.getElementById("ketQua").innerText = "Vui lòng nhập đầy đủ!";
         return;
       }
 
-      const startMinutes = parseTimeToMinutes(start);
-      const endMinutes = parseTimeToMinutes(end);
-      let workMinutes = endMinutes - startMinutes;
-      const breakMinutes = calculateBreakTime(startMinutes, endMinutes);
-      workMinutes -= breakMinutes;
-      const totalHours = workMinutes / 60;
-
-      const final = totalHours * output * 0.96;
-      document.getElementById("result").textContent =
-        `Tổng giờ: ${totalHours.toFixed(2)} | Sản lượng: ${output} | Kết quả: ${final.toFixed(2)} (đã trừ ${breakMinutes} phút nghỉ)`;
-
-      document.getElementById("finalResult").textContent = final.toFixed(2);
-      document.getElementById("outputDisplay").textContent = output;
+      const ketQua = (soGoc * phanTram / 100).toFixed(2);
+      document.getElementById("ketQua").innerText = ${phanTram}% của ${soGoc} là ${ketQua};
     }
   </script>
 </body>
 </html>
+
