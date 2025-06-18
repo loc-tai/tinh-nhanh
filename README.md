@@ -7,27 +7,34 @@
   <style>
     * { box-sizing: border-box; }
     body {
-      font-family: Arial, sans-serif;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
       margin: 0;
       padding: 20px;
-      background-color: #f4f4f4;
+      background-image: url('https://em-content.zobj.net/source/joypixels/369/smiling-face_263a-fe0f.png');
+      background-repeat: repeat;
+      background-size: 60px 60px;
+      background-color: #c2e9fb;
       color: #333;
     }
     h1 {
       text-align: center;
       margin-bottom: 30px;
+      color: #2c3e50;
+      text-shadow: 1px 1px 2px white;
     }
     .container {
       max-width: 500px;
       margin: 0 auto;
       background: white;
       padding: 20px;
-      border-radius: 10px;
-      box-shadow: 0 4px 6px rgba(0,0,0,0.1);
+      border-radius: 15px;
+      box-shadow: 0 8px 16px rgba(0,0,0,0.2);
     }
     label {
       display: block;
       margin-bottom: 10px;
+      font-weight: bold;
+      color: #34495e;
     }
     input[type="time"],
     input[type="number"] {
@@ -35,36 +42,46 @@
       padding: 10px;
       margin-top: 5px;
       border: 1px solid #ccc;
-      border-radius: 5px;
+      border-radius: 8px;
+      background-color: #f9f9f9;
     }
     button {
       width: 100%;
-      padding: 10px;
+      padding: 12px;
       margin-top: 20px;
-      background-color: #007bff;
+      background: linear-gradient(to right, #00c6ff, #0072ff);
       color: white;
       border: none;
-      border-radius: 5px;
+      border-radius: 8px;
       font-size: 16px;
+      font-weight: bold;
       cursor: pointer;
+      transition: background 0.3s;
     }
     button:hover {
-      background-color: #0056b3;
+      background: linear-gradient(to right, #0072ff, #00c6ff);
     }
     table {
       width: 100%;
       border-collapse: collapse;
       margin-top: 20px;
     }
+    th {
+      background-color: #3498db;
+      color: white;
+    }
     th, td {
       border: 1px solid #ccc;
       padding: 10px;
       text-align: center;
+      background-color: #ecf0f1;
     }
     .result {
       margin-top: 20px;
       font-weight: bold;
       text-align: center;
+      color: #2e86de;
+      font-size: 18px;
     }
   </style>
 </head>
